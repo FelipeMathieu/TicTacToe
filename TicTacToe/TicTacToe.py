@@ -7,6 +7,7 @@
 # 6 7 8
 
 from random import *
+from builtins import print
 
 class TicTacToe(object):
 							#Horizontal, vertical e diagonal
@@ -131,26 +132,31 @@ def getEnemy(player):
 		return 'O'
 	return 'X'
 
-if __name__  ==  "__main__":
-	board = TicTacToe()
-	board.showBoard()
+if __name__ == "__main__":
+    board = TicTacToe()
+    board.showBoard()
 
-	while not board.complete():
-		player = 'X'
-		playerMove = int(input("Proximo movimento: ")) - 1
+    while not board.complete():
+        player = 'X'
+        playerMove = int(input("Proxima jogada humano: ")) - 1
 
-		if not playerMove in board.availableMovements():
-			continue
+        if not playerMove in board.availableMovements():
+            continue
+        
+        board.makeMove(playerMove, player)
+        board.showBoard()
 
-		board.makeMove(playerMove, player)
-		board.showBoard()
+        if board.complete():
+            break
 
-		if board.complete():
-			break
-		
-		player = getEnemy(player)
-		pcMove = determine(board, player)
-		board.makeMove(pcMove, player)
-		board.showBoard()
+        player = getEnemy(player)
+        pcMove = determine(board, player)
+        board.makeMove(pcMove, player)
+        board.showBoard()
 
-	print("O vencedor e: ", board.winner())
+    if board.winner() == 'X':
+        print("Voce teve sorte desta vez, humano")
+    elif board.winner() == 'O':
+        print("Humano inferior, voce nunca vencera de mim!")
+    else:
+        print("Velha")
