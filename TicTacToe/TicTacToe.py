@@ -18,7 +18,7 @@ class TicTacToe(object):
 
 	def __init__(auto, squares = []):
 		if len(squares) == 0:
-			auto.squares = [None for i in range(9)]
+			auto.squares = [' '] * 9
 		else:
 			auto.squares = squares
 
@@ -28,7 +28,7 @@ class TicTacToe(object):
 
 	def availableMovements(auto):
 		'''Que parte do tabuleiro está vazia'''
-		return [k for k, v in enumerate(auto.squares) if v is None]
+		return [k for k, v in enumerate(auto.squares) if v is ' ']
 
 	def availablePossibilities(auto):
 		'''Quais possibilidades são avaliadas'''
@@ -36,7 +36,7 @@ class TicTacToe(object):
 
 	def complete(auto):
 		'''Fim de jogo?'''
-		if None not in [v for v in auto.squares]:
+		if ' ' not in [v for v in auto.squares]:
 			return True
 		if auto.winner() != None:
 			return True
@@ -87,7 +87,7 @@ class TicTacToe(object):
 		for move in node.availableMovements():
 			node.makeMove(move, player)
 			val = auto.alphaBeta(node, getEnemy(player), alpha, beta)
-			node.makeMove(move, None)
+			node.makeMove(move, ' ')
 			if player == 'O':
 				if val > alpha:
 					alpha = val
@@ -115,7 +115,7 @@ def determine(board, player):
 	for move in board.availableMovements():
 		board.makeMove(move, player)
 		val = board.alphaBeta(board, getEnemy(player), -2, 2)
-		board.makeMove(move, None)
+		board.makeMove(move, ' ')
 
 		print("Movimento: " + str(move + 1) + " pois: " + board.winners[val + 1])
 
