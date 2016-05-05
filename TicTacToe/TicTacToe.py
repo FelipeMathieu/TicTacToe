@@ -9,28 +9,28 @@
 from random import *
 
 class TicTacToe(object):
-							#Horizontal
+							#Horizontal, vertical e diagonal
 	winningPossibilities = ([0, 1, 2], [3, 4, 5], [6, 7, 8], 
-			'''Vertical'''	[0, 3, 6], [1, 4, 7], [2, 5, 8],
-			'''Diagonal'''  [0, 4, 8], [2, 4, 6])
+			                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+			                [0, 4, 8], [2, 4, 6])
 	winners = ('X_vence', 'Empata', 'O_vence')
 
 	def __init__(auto, squares = []):
 		if len(squares) == 0:
 			auto.squares = [None for i in range(9)]
 		else:
-			self.squares = squares
+			auto.squares = squares
 
 	def showBoard(auto):
 		for e in [auto.squares[i: i + 3] for i in range(0, len(auto.squares), 3)]:
 			print(e)
 
 	def availableMovements(auto):
-		'''Que parte do tabuleiro está vazia'''
+		'''Que parte do tabuleiro estÃ¡ vazia'''
 		return [k for k, v in enumerate(auto.squares) if v is None]
 
 	def availablePossibilities(auto):
-		'''Quais possibilidades são avaliadas'''
+		'''Quais possibilidades sÃ£o avaliadas'''
 		return auto.availableMovements() + auto.getSquares()
 
 	def complete(auto):
@@ -49,7 +49,7 @@ class TicTacToe(object):
 		return auto.winner() == 'O'
 
 	def tied(auto):
-		return auto.complete() == True and self.winner() is None
+		return auto.complete() == True and auto.winner() is None
 
 	def winner(auto):
 		for player in ('X', 'O'):
@@ -67,7 +67,7 @@ class TicTacToe(object):
 		return None
 
 	def getSquares(auto, player):
-		'''Espaços já do jogador'''
+		'''EspaÃ§os jÃ¡ do jogador'''
 		return [k for k, v in enumerate(auto.squares) if v == player]
 
 	def makeMove(auto, pos, player):
@@ -116,7 +116,7 @@ def determine(board, player):
 		val = board.alphaBeta(board, getEnemy(player), -2, 2)
 		board.makeMove(move, None)
 
-		print("Movimento: " + move + 1 + " pois: " + board.winners[val + 1])
+		print("Movimento: " + str(move + 1) + " pois: " + board.winners[val + 1])
 
 		if val > a:
 			a = val
@@ -124,7 +124,7 @@ def determine(board, player):
 		elif val == 2:
 			choices.append(move)
 
-	return random.choice(choices)
+	return choice(choices)
 
 def getEnemy(player):
 	if player == 'X':
@@ -137,7 +137,7 @@ if __name__  ==  "__main__":
 
 	while not board.complete():
 		player = 'X'
-		playerMove = int(raw_input("Proximo movimento: ")) - 1
+		playerMove = int(input("Proximo movimento: ")) - 1
 
 		if not playerMove in board.availableMovements():
 			continue
@@ -153,4 +153,4 @@ if __name__  ==  "__main__":
 		board.makeMove(pcMove, player)
 		board.showBoard()
 
-	print("Vencedor: ", board.winner())
+	print("O vencedor e: ", board.winner())
